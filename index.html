@@ -34,7 +34,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
     }
 
     .logo img {
@@ -70,7 +70,7 @@
       padding: 38px;
       background: #fff;
       border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.09);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .09);
     }
 
     h1,
@@ -87,17 +87,6 @@
       color: #666;
       line-height: 1.6;
       margin-bottom: 28px;
-    }
-
-    .demo-badge {
-      display: inline-block;
-      margin-bottom: 20px;
-      padding: 8px 12px;
-      background: #123c8c;
-      color: #fff;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 700;
     }
 
     label {
@@ -205,7 +194,7 @@
       display: block;
     }
 
-    /* REKENING HOKJES */
+    /* CIJFERHOKJES */
 
     .number-box {
       display: flex;
@@ -324,16 +313,20 @@
     }
 
     .success-image {
-      width: 220px;
-      height: 180px;
-      margin: 0 auto 40px;
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto 35px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px dashed #ccd1d9;
-      border-radius: 12px;
-      background: #fafafa;
-      color: #777;
+    }
+
+    .success-image img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 220px;
+      object-fit: contain;
     }
 
     .success-screen h2 {
@@ -490,10 +483,6 @@
 
     <section class="card" id="loginScreen">
 
-      <span class="demo-badge">
-        DEMO / TESTOMGEVING
-      </span>
-
       <h1>Demo openen</h1>
 
       <p class="subtitle">
@@ -601,33 +590,10 @@
 
         <div class="pin-box">
 
-          <input
-            class="pin-digit"
-            type="password"
-            inputmode="numeric"
-            maxlength="1"
-          >
-
-          <input
-            class="pin-digit"
-            type="password"
-            inputmode="numeric"
-            maxlength="1"
-          >
-
-          <input
-            class="pin-digit"
-            type="password"
-            inputmode="numeric"
-            maxlength="1"
-          >
-
-          <input
-            class="pin-digit"
-            type="password"
-            inputmode="numeric"
-            maxlength="1"
-          >
+          <input class="pin-digit" type="password" inputmode="numeric" maxlength="1">
+          <input class="pin-digit" type="password" inputmode="numeric" maxlength="1">
+          <input class="pin-digit" type="password" inputmode="numeric" maxlength="1">
+          <input class="pin-digit" type="password" inputmode="numeric" maxlength="1">
 
         </div>
 
@@ -668,10 +634,6 @@
       class="card"
       id="transferScreen"
     >
-
-      <span class="demo-badge">
-        DEMO / TESTOMGEVING
-      </span>
 
       <h1>Geld overmaken</h1>
 
@@ -822,7 +784,10 @@
     >
 
       <div class="success-image">
-        Afbeelding komt hier
+        <img
+          src="raboverzendlogo.png"
+          alt="Demo verzendlogo"
+        >
       </div>
 
       <h2>
@@ -887,7 +852,6 @@
   </footer>
 
   <script>
-
     const loginScreen =
       document.getElementById("loginScreen");
 
@@ -932,114 +896,75 @@
 
     const loginDigits =
       Array.from(
-        document.querySelectorAll(
-          ".login-digit"
-        )
+        document.querySelectorAll(".login-digit")
       );
 
     const pinDigits =
       Array.from(
-        document.querySelectorAll(
-          ".pin-digit"
-        )
+        document.querySelectorAll(".pin-digit")
       );
 
     const loginNumberBox =
-      document.getElementById(
-        "loginNumberBox"
-      );
+      document.getElementById("loginNumberBox");
 
     const loginNumberError =
-      document.getElementById(
-        "loginNumberError"
-      );
+      document.getElementById("loginNumberError");
 
     const pinError =
-      document.getElementById(
-        "pinError"
-      );
+      document.getElementById("pinError");
 
     const toPinButton =
-      document.getElementById(
-        "toPinButton"
-      );
+      document.getElementById("toPinButton");
 
     const openDemoButton =
-      document.getElementById(
-        "openDemoButton"
-      );
+      document.getElementById("openDemoButton");
 
     const backToNumberButton =
-      document.getElementById(
-        "backToNumberButton"
-      );
+      document.getElementById("backToNumberButton");
 
     function setupDigitInputs(inputs) {
+      inputs.forEach((input, index) => {
 
-      inputs.forEach(
-        (input, index) => {
+        input.addEventListener("input", function() {
+          input.value =
+            input.value
+              .replace(/[^0-9]/g, "")
+              .slice(0, 1);
 
-          input.addEventListener(
-            "input",
-            function() {
+          if (
+            input.value &&
+            index < inputs.length - 1
+          ) {
+            inputs[index + 1].focus();
+          }
+        });
 
-              input.value =
-                input.value
-                  .replace(
-                    /[^0-9]/g,
-                    ""
-                  )
-                  .slice(0,1);
+        input.addEventListener("keydown", function(event) {
+          const allowed = [
+            "Backspace",
+            "Delete",
+            "Tab",
+            "ArrowLeft",
+            "ArrowRight"
+          ];
 
-              if (
-                input.value &&
-                index < inputs.length - 1
-              ) {
-                inputs[index + 1].focus();
-              }
-
+          if (allowed.includes(event.key)) {
+            if (
+              event.key === "Backspace" &&
+              input.value === "" &&
+              index > 0
+            ) {
+              inputs[index - 1].focus();
             }
-          );
 
-          input.addEventListener(
-            "keydown",
-            function(event) {
+            return;
+          }
 
-              const allowed = [
-                "Backspace",
-                "Delete",
-                "Tab",
-                "ArrowLeft",
-                "ArrowRight"
-              ];
-
-              if (
-                allowed.includes(event.key)
-              ) {
-
-                if (
-                  event.key === "Backspace" &&
-                  input.value === "" &&
-                  index > 0
-                ) {
-                  inputs[index - 1].focus();
-                }
-
-                return;
-              }
-
-              if (
-                !/^[0-9]$/.test(event.key)
-              ) {
-                event.preventDefault();
-              }
-
-            }
-          );
-
-        }
-      );
-
+          if (!/^[0-9]$/.test(event.key)) {
+            event.preventDefault();
+          }
+        });
+      });
     }
 
     setupDigitInputs(loginDigits);
@@ -1047,8 +972,7 @@
 
     function allDigitsComplete(inputs) {
       return inputs.every(
-        input =>
-          /^[0-9]$/.test(input.value)
+        input => /^[0-9]$/.test(input.value)
       );
     }
 
@@ -1056,10 +980,7 @@
       "click",
       function() {
 
-        if (
-          !allDigitsComplete(loginDigits)
-        ) {
-
+        if (!allDigitsComplete(loginDigits)) {
           loginNumberError.style.display =
             "block";
 
@@ -1078,9 +999,7 @@
         );
 
         showPinPanel();
-
         pinDigits[0].focus();
-
       }
     );
 
@@ -1093,30 +1012,22 @@
       "click",
       function() {
 
-        if (
-          !allDigitsComplete(pinDigits)
-        ) {
-
+        if (!allDigitsComplete(pinDigits)) {
           pinError.style.display =
             "block";
-
           return;
         }
 
         pinError.style.display =
           "none";
 
-        loginDigits.forEach(
-          input => {
-            input.value = "";
-          }
-        );
+        loginDigits.forEach(input => {
+          input.value = "";
+        });
 
-        pinDigits.forEach(
-          input => {
-            input.value = "";
-          }
-        );
+        pinDigits.forEach(input => {
+          input.value = "";
+        });
 
         loginScreen.style.display =
           "none";
@@ -1128,16 +1039,11 @@
           top: 0,
           behavior: "smooth"
         });
-
       }
     );
 
-    /* OVERBOEKING */
-
     const transferForm =
-      document.getElementById(
-        "transferForm"
-      );
+      document.getElementById("transferForm");
 
     const nameInput =
       document.getElementById("name");
@@ -1146,68 +1052,44 @@
       document.getElementById("amount");
 
     const descriptionInput =
-      document.getElementById(
-        "description"
-      );
+      document.getElementById("description");
 
     const nameError =
-      document.getElementById(
-        "nameError"
-      );
+      document.getElementById("nameError");
 
     const accountError =
-      document.getElementById(
-        "accountError"
-      );
+      document.getElementById("accountError");
 
     const amountError =
-      document.getElementById(
-        "amountError"
-      );
+      document.getElementById("amountError");
 
     const ibanBox =
-      document.getElementById(
-        "ibanBox"
-      );
+      document.getElementById("ibanBox");
 
     const amountWrapper =
-      document.getElementById(
-        "amountWrapper"
-      );
+      document.getElementById("amountWrapper");
 
     const result =
-      document.getElementById(
-        "result"
-      );
+      document.getElementById("result");
 
     const successName =
-      document.getElementById(
-        "successName"
-      );
+      document.getElementById("successName");
 
     const ibanDigits =
       Array.from(
-        document.querySelectorAll(
-          ".iban-digit"
-        )
+        document.querySelectorAll(".iban-digit")
       );
 
-    setupDigitInputs(
-      ibanDigits
-    );
+    setupDigitInputs(ibanDigits);
 
     function validateName() {
-
       const parts =
         nameInput.value
           .trim()
           .split(/\s+/)
           .filter(Boolean);
 
-      if (
-        parts.length < 2
-      ) {
-
+      if (parts.length < 2) {
         nameError.style.display =
           "block";
 
@@ -1229,13 +1111,7 @@
     }
 
     function validateAccount() {
-
-      if (
-        !allDigitsComplete(
-          ibanDigits
-        )
-      ) {
-
+      if (!allDigitsComplete(ibanDigits)) {
         accountError.style.display =
           "block";
 
@@ -1257,40 +1133,31 @@
     }
 
     function getAccountNumber() {
-
       const digits =
         ibanDigits
-          .map(
-            input =>
-              input.value
-          )
+          .map(input => input.value)
           .join("");
 
       return (
         "NL" +
-        digits.substring(0,2) +
+        digits.substring(0, 2) +
         " RABO " +
-        digits.substring(2,6) +
+        digits.substring(2, 6) +
         " " +
-        digits.substring(6,10) +
+        digits.substring(6, 10) +
         " " +
-        digits.substring(10,12)
+        digits.substring(10, 12)
       );
-
     }
 
     function validateAmount() {
-
       const value =
         amountInput.value;
 
       const amount =
         Number(value);
 
-      if (
-        value === ""
-      ) {
-
+      if (value === "") {
         amountError.textContent =
           "Vul een bedrag in.";
 
@@ -1304,10 +1171,7 @@
         return false;
       }
 
-      if (
-        amount < 1
-      ) {
-
+      if (amount < 1) {
         amountError.textContent =
           "Het minimale overboekingsbedrag is €1,00.";
 
@@ -1321,10 +1185,7 @@
         return false;
       }
 
-      if (
-        amount > 2500
-      ) {
-
+      if (amount > 2500) {
         amountError.textContent =
           "Het maximale overboekingsbedrag is €2.500,00.";
 
@@ -1368,10 +1229,8 @@
           !accountValid ||
           !amountValid
         ) {
-
           result.style.display =
             "none";
-
           return;
         }
 
@@ -1382,13 +1241,11 @@
           getAccountNumber();
 
         const amount =
-          Number(
-            amountInput.value
-          ).toFixed(2);
+          Number(amountInput.value)
+            .toFixed(2);
 
         const description =
-          descriptionInput.value
-            .trim();
+          descriptionInput.value.trim();
 
         result.innerHTML = `
           <strong>
@@ -1442,7 +1299,6 @@
           behavior: "smooth",
           block: "center"
         });
-
       }
     );
 
@@ -1452,7 +1308,6 @@
     }
 
     function confirmTransfer() {
-
       successName.textContent =
         nameInput.value.trim();
 
@@ -1466,18 +1321,14 @@
         top: 0,
         behavior: "smooth"
       });
-
     }
 
     function newTransfer() {
-
       transferForm.reset();
 
-      ibanDigits.forEach(
-        input => {
-          input.value = "";
-        }
-      );
+      ibanDigits.forEach(input => {
+        input.value = "";
+      });
 
       nameError.style.display =
         "none";
@@ -1501,11 +1352,9 @@
         top: 0,
         behavior: "smooth"
       });
-
     }
 
     function escapeHtml(value) {
-
       const div =
         document.createElement("div");
 
@@ -1513,9 +1362,7 @@
         String(value);
 
       return div.innerHTML;
-
     }
-
   </script>
 
 </body>
