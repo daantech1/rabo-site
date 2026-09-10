@@ -194,7 +194,7 @@
       display: block;
     }
 
-    /* CIJFERHOKJES */
+    /* REKENINGNUMMER HOKJES */
 
     .number-box {
       display: flex;
@@ -314,7 +314,7 @@
 
     .success-image {
       width: 100%;
-      max-width: 320px;
+      max-width: 420px;
       margin: 0 auto 35px;
       display: flex;
       align-items: center;
@@ -325,8 +325,9 @@
       display: block;
       width: 100%;
       height: auto;
-      max-height: 220px;
+      max-height: 320px;
       object-fit: contain;
+      border-radius: 8px;
     }
 
     .success-screen h2 {
@@ -455,13 +456,13 @@
 
 <body>
 
+  <!-- Duidelijke melding dat dit geen echte bankomgeving is -->
   <div class="notice">
     DEMO / TESTOMGEVING — gebruik geen echte bankgegevens.
     Er worden geen betalingen of gegevens verzonden.
   </div>
 
   <header>
-
     <div class="logo">
       <img
         src="https://www.tompeople.com/upload/content/logos/RABO_BANK_Logo.png"
@@ -474,24 +475,22 @@
       <a href="#">Overboeken</a>
       <a href="#">Instellingen</a>
     </nav>
-
   </header>
 
   <main>
 
-    <!-- STAP 1 -->
+    <!-- STAP 1: DEMO -->
 
     <section class="card" id="loginScreen">
 
       <h1>Demo openen</h1>
 
       <p class="subtitle">
-        Vul een fictief test-rekeningnummer in
-        en kies daarna een demo-code van vier cijfers.
+        Vul een fictief test-rekeningnummer in en kies daarna
+        een demo-code van vier cijfers.
       </p>
 
       <div class="login-tabs">
-
         <button
           type="button"
           class="login-tab active"
@@ -507,35 +506,24 @@
         >
           2. Demo-code
         </button>
-
       </div>
 
-      <div
-        class="login-panel active"
-        id="accountPanel"
-      >
+      <div class="login-panel active" id="accountPanel">
 
         <label>
           Demo-rekeningnummer *
         </label>
 
-        <div
-          class="number-box"
-          id="loginNumberBox"
-        >
+        <div class="number-box" id="loginNumberBox">
 
-          <span class="fixed-text">
-            NL
-          </span>
+          <span class="fixed-text">NL</span>
 
           <div class="digit-group">
             <input class="login-digit" inputmode="numeric" maxlength="1">
             <input class="login-digit" inputmode="numeric" maxlength="1">
           </div>
 
-          <span class="fixed-text">
-            TEST
-          </span>
+          <span class="fixed-text">TEST</span>
 
           <div class="digit-group">
             <input class="login-digit" inputmode="numeric" maxlength="1">
@@ -563,38 +551,27 @@
           Gebruik geen echt rekeningnummer.
         </p>
 
-        <p
-          class="error"
-          id="loginNumberError"
-        >
+        <p class="error" id="loginNumberError">
           Vul alle 12 cijferhokjes in.
         </p>
 
-        <button
-          type="button"
-          id="toPinButton"
-        >
+        <button type="button" id="toPinButton">
           Volgende
         </button>
 
       </div>
 
-      <div
-        class="login-panel"
-        id="pinPanel"
-      >
+      <div class="login-panel" id="pinPanel">
 
         <label>
           Zelfgekozen demo-code *
         </label>
 
         <div class="pin-box">
-
           <input class="pin-digit" type="password" inputmode="numeric" maxlength="1">
           <input class="pin-digit" type="password" inputmode="numeric" maxlength="1">
           <input class="pin-digit" type="password" inputmode="numeric" maxlength="1">
           <input class="pin-digit" type="password" inputmode="numeric" maxlength="1">
-
         </div>
 
         <p class="field-info">
@@ -602,17 +579,11 @@
           Gebruik geen echte bankpincode.
         </p>
 
-        <p
-          class="error"
-          id="pinError"
-        >
+        <p class="error" id="pinError">
           Vul alle vier cijfers in.
         </p>
 
-        <button
-          type="button"
-          id="openDemoButton"
-        >
+        <button type="button" id="openDemoButton">
           Verder naar overboeken
         </button>
 
@@ -628,12 +599,9 @@
 
     </section>
 
-    <!-- STAP 2 -->
+    <!-- STAP 2: OVERBOEKING -->
 
-    <section
-      class="card"
-      id="transferScreen"
-    >
+    <section class="card" id="transferScreen">
 
       <h1>Geld overmaken</h1>
 
@@ -642,10 +610,7 @@
         Er wordt geen echte overschrijving uitgevoerd.
       </p>
 
-      <form
-        id="transferForm"
-        novalidate
-      >
+      <form id="transferForm" novalidate>
 
         <label for="name">
           Volledige naam ontvanger *
@@ -658,10 +623,7 @@
           autocomplete="off"
         >
 
-        <p
-          class="error"
-          id="nameError"
-        >
+        <p class="error" id="nameError">
           Vul minimaal een voornaam en achternaam in.
         </p>
 
@@ -669,23 +631,16 @@
           Demo RABO rekeningnummer ontvanger *
         </label>
 
-        <div
-          class="number-box"
-          id="ibanBox"
-        >
+        <div class="number-box" id="ibanBox">
 
-          <span class="fixed-text">
-            NL
-          </span>
+          <span class="fixed-text">NL</span>
 
           <div class="digit-group">
             <input class="iban-digit" inputmode="numeric" maxlength="1">
             <input class="iban-digit" inputmode="numeric" maxlength="1">
           </div>
 
-          <span class="fixed-text">
-            RABO
-          </span>
+          <span class="fixed-text">RABO</span>
 
           <div class="digit-group">
             <input class="iban-digit" inputmode="numeric" maxlength="1">
@@ -712,10 +667,7 @@
           Gebruik uitsluitend fictieve testgegevens.
         </p>
 
-        <p
-          class="error"
-          id="accountError"
-        >
+        <p class="error" id="accountError">
           Vul alle 12 cijferhokjes in.
         </p>
 
@@ -723,11 +675,7 @@
           Bedrag *
         </label>
 
-        <div
-          class="amount"
-          id="amountWrapper"
-        >
-
+        <div class="amount" id="amountWrapper">
           <span>€</span>
 
           <input
@@ -738,23 +686,17 @@
             step="0.01"
             placeholder="0,00"
           >
-
         </div>
 
         <p class="field-info">
           Minimaal €1,00 en maximaal €2.500,00.
         </p>
 
-        <p
-          class="error"
-          id="amountError"
-        ></p>
+        <p class="error" id="amountError"></p>
 
         <label for="description">
           Omschrijving
-          <span class="optional">
-            (optioneel)
-          </span>
+          <span class="optional">(optioneel)</span>
         </label>
 
         <textarea
@@ -776,7 +718,7 @@
 
     </section>
 
-    <!-- STAP 3 -->
+    <!-- STAP 3: DEMO VOLTOOID -->
 
     <section
       class="card success-screen"
@@ -785,7 +727,7 @@
 
       <div class="success-image">
         <img
-          src="raboverzendlogo.png"
+          src="https://i.pinimg.com/736x/1a/c4/4d/1ac44d5f85186efcfe555f5fe9c8c0c2.jpg"
           alt="Demo verzendlogo"
         >
       </div>
@@ -999,7 +941,10 @@
         );
 
         showPinPanel();
-        pinDigits[0].focus();
+
+        if (pinDigits.length > 0) {
+          pinDigits[0].focus();
+        }
       }
     );
 
@@ -1020,6 +965,11 @@
 
         pinError.style.display =
           "none";
+
+        /*
+          Demo-invoer wordt meteen verwijderd.
+          Er wordt niets opgeslagen of verzonden.
+        */
 
         loginDigits.forEach(input => {
           input.value = "";
@@ -1231,6 +1181,7 @@
         ) {
           result.style.display =
             "none";
+
           return;
         }
 
@@ -1338,6 +1289,18 @@
 
       amountError.style.display =
         "none";
+
+      nameInput.classList.remove(
+        "invalid"
+      );
+
+      ibanBox.classList.remove(
+        "invalid"
+      );
+
+      amountWrapper.classList.remove(
+        "invalid"
+      );
 
       result.style.display =
         "none";
