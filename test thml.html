@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Overboeking Simulator</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f9;
+      color: #222;
+    }
+
+    .notice {
+      background: #fff3cd;
+      color: #664d03;
+      padding: 12px 20px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    header {
+      min-height: 88px;
+      padding: 14px 7%;
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    }
+
+    .logo img {
+      display: block;
+      width: 190px;
+      max-width: 100%;
+      max-height: 58px;
+      object-fit: contain;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      color: #222;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: #123c8c;
+    }
+
+    main {
+      padding: 70px 20px;
+    }
+
+    .card {
+      max-width: 680px;
+      margin: auto;
+      padding: 38px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.09);
+    }
+
+    h1,
+    h2 {
+      color: #123c8c;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 34px;
+    }
+
+    .subtitle {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .demo-badge {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 8px 12px;
+      background: #123c8c;
+      color: #fff;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    label {
+      display: block;
+      margin: 20px 0 8px;
+      font-weight: 700;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccd1d9;
+      border-radius: 8px;
+      background: #fff;
+      font: inherit;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #123c8c;
+      outline: 2px solid #9db9ee;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .field-info {
+      margin-top: 7px;
+      color: #666;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .optional {
+      color: #777;
+      font-size: 13px;
+      font-weight: normal;
+    }
+
+    .error {
+      display: none;
+      margin-top: 8px;
+      color: #b00020;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .invalid {
+      border-color: #b00020 !important;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 28px;
+      padding: 16px;
+      border: 0;
+      border-radius: 8px;
+      background: #f58220;
+      color: #fff;
+      cursor: pointer;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    button:hover {
+      opacity: .9;
+    }
+
+    .secondary-button {
+      background: #e4e7eb;
+      color: #222;
+    }
+
+    /* LOGIN TABS */
+
+    .login-tabs {
+      display: flex;
+      margin-bottom: 28px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .login-tab {
+      width: auto;
+      margin: 0;
+      padding: 13px 18px;
+      background: transparent;
+      color: #555;
+      border-radius: 0;
+      border-bottom: 3px solid transparent;
+    }
+
+    .login-tab.active {
+      color: #123c8c;
+      border-bottom-color: #f58220;
+    }
+
+    .login-panel {
+      display: none;
+    }
+
+    .login-panel.active {
+      display: block;
+    }
+
+    /* REKENING HOKJES */
+
+    .number-box {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 14px;
+      border: 1px solid #ccd1d9;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    .number-box.invalid {
+      border-color: #b00020;
+    }
+
+    .fixed-text {
+      color: #123c8c;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .digit-group {
+      display: flex;
+      gap: 5px;
+    }
+
+    .login-digit,
+    .iban-digit,
+    .pin-digit {
+      width: 36px;
+      height: 44px;
+      padding: 0;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 700;
+      border: 1px solid #aeb6c2;
+      border-radius: 6px;
+    }
+
+    .pin-box {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .pin-digit {
+      width: 50px;
+      height: 50px;
+    }
+
+    /* BEDRAG */
+
+    .amount {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border: 1px solid #ccd1d9;
+      border-radius: 8px;
+    }
+
+    .amount.invalid {
+      border-color: #b00020;
+    }
+
+    .amount span {
+      padding-left: 15px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .amount input {
+      border: 0;
+      outline: none;
+    }
+
+    /* CONTROLE */
+
+    .result {
+      display: none;
+      margin-top: 25px;
+      padding: 20px;
+      background: #eaf4ff;
+      border-radius: 10px;
+      line-height: 1.8;
+    }
+
+    .result strong {
+      color: #123c8c;
+    }
+
+    .result-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .result-actions button {
+      flex: 1;
+      margin-top: 0;
+    }
+
+    /* SCHERMEN */
+
+    #transferScreen,
+    #successScreen {
+      display: none;
+    }
+
+    /* SUCCES */
+
+    .success-screen {
+      text-align: center;
+      min-height: 550px;
+      padding-top: 55px;
+    }
+
+    .success-image {
+      width: 220px;
+      height: 180px;
+      margin: 0 auto 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed #ccd1d9;
+      border-radius: 12px;
+      background: #fafafa;
+      color: #777;
+    }
+
+    .success-screen h2 {
+      color: #1264b0;
+      font-size: 36px;
+      font-weight: 500;
+      margin-bottom: 22px;
+    }
+
+    .success-message {
+      color: #101f70;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+
+    .success-warning {
+      max-width: 500px;
+      margin: 30px auto 0;
+      padding: 15px;
+      background: #fff3cd;
+      color: #664d03;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .close-message {
+      margin-top: 40px;
+      color: #101f70;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .new-transfer {
+      max-width: 300px;
+      margin: 30px auto 0;
+    }
+
+    /* FOOTER */
+
+    footer {
+      margin-top: 70px;
+      padding: 25px 7%;
+      background: #123c8c;
+      color: #fff;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .footer-logo {
+      width: 90px;
+      height: 34px;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 4px;
+      padding: 4px 7px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+    }
+
+    .footer-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 15px 5%;
+      }
+
+      .logo img {
+        width: 150px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      main {
+        padding: 35px 15px;
+      }
+
+      .card {
+        padding: 25px;
+      }
+
+      .login-digit,
+      .iban-digit {
+        width: 31px;
+        height: 40px;
+        font-size: 18px;
+      }
+
+      .result-actions {
+        flex-direction: column;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="notice">
+    DEMO / TESTOMGEVING — gebruik geen echte bankgegevens.
+    Er worden geen betalingen of gegevens verzonden.
+  </div>
+
+  <header>
+
+    <div class="logo">
+      <img
+        src="https://www.tompeople.com/upload/content/logos/RABO_BANK_Logo.png"
+        alt="Rabobank logo"
+      >
+    </div>
+
+    <nav>
+      <a href="#">Overzicht</a>
+      <a href="#">Overboeken</a>
+      <a href="#">Instellingen</a>
+    </nav>
+
+  </header>
+
+  <main>
+
+    <!-- STAP 1 -->
+
+    <section class="card" id="loginScreen">
+
+      <span class="demo-badge">
+        DEMO / TESTOMGEVING
+      </span>
+
+      <h1>Demo openen</h1>
+
+      <p class="subtitle">
+        Vul een fictief test-rekeningnummer in
+        en kies daarna een demo-code van vier cijfers.
+      </p>
+
+      <div class="login-tabs">
+
+        <button
+          type="button"
+          class="login-tab active"
+          id="accountTab"
+        >
+          1. Rekening
+        </button>
+
+        <button
+          type="button"
+          class="login-tab"
+          id="pinTab"
+        >
+          2. Demo-code
+        </button>
+
+      </div>
+
+      <div
+        class="login-panel active"
+        id="accountPanel"
+      >
+
+        <label>
+          Demo-rekeningnummer *
+        </label>
+
+        <div
+          class="number-box"
+          id="loginNumberBox"
+        >
+
+          <span class="fixed-text">
+            NL
+          </span>
+
+          <div class="digit-group">
+            <input class="login-digit" inputmode="numeric" maxlength="1">
+            <input class="login-digit" inputmode="numeric" maxlength="1">
+          </div>
+
+          <span class="fixed-text">
+            TEST
+          </span>
+
+          <div class="digit-group">
+            <input class="login-digit" inputmode="numeric" maxlength="1">
+            <input class="login-digit" inputmode="numeric" maxlength="1">
+            <input class="login-digit" inputmode="numeric" maxlength="1">
+            <input class="login-digit" inputmode="numeric" maxlength="1">
+          </div>
+
+          <div class="digit-group">
+            <input class="login-digit" inputmode="numeric" maxlength="1">
+            <input class="login-digit" inputmode="numeric" maxlength="1">
+            <input class="login-digit" inputmode="numeric" maxlength="1">
+            <input class="login-digit" inputmode="numeric" maxlength="1">
+          </div>
+
+          <div class="digit-group">
+            <input class="login-digit" inputmode="numeric" maxlength="1">
+            <input class="login-digit" inputmode="numeric" maxlength="1">
+          </div>
+
+        </div>
+
+        <p class="field-info">
+          Vul alle 12 cijferhokjes in.
+          Gebruik geen echt rekeningnummer.
+        </p>
+
+        <p
+          class="error"
+          id="loginNumberError"
+        >
+          Vul alle 12 cijferhokjes in.
+        </p>
+
+        <button
+          type="button"
+          id="toPinButton"
+        >
+          Volgende
+        </button>
+
+      </div>
+
+      <div
+        class="login-panel"
+        id="pinPanel"
+      >
+
+        <label>
+          Zelfgekozen demo-code *
+        </label>
+
+        <div class="pin-box">
+
+          <input
+            class="pin-digit"
+            type="password"
+            inputmode="numeric"
+            maxlength="1"
+          >
+
+          <input
+            class="pin-digit"
+            type="password"
+            inputmode="numeric"
+            maxlength="1"
+          >
+
+          <input
+            class="pin-digit"
+            type="password"
+            inputmode="numeric"
+            maxlength="1"
+          >
+
+          <input
+            class="pin-digit"
+            type="password"
+            inputmode="numeric"
+            maxlength="1"
+          >
+
+        </div>
+
+        <p class="field-info">
+          Kies vier willekeurige cijfers.
+          Gebruik geen echte bankpincode.
+        </p>
+
+        <p
+          class="error"
+          id="pinError"
+        >
+          Vul alle vier cijfers in.
+        </p>
+
+        <button
+          type="button"
+          id="openDemoButton"
+        >
+          Verder naar overboeken
+        </button>
+
+        <button
+          type="button"
+          class="secondary-button"
+          id="backToNumberButton"
+        >
+          Terug
+        </button>
+
+      </div>
+
+    </section>
+
+    <!-- STAP 2 -->
+
+    <section
+      class="card"
+      id="transferScreen"
+    >
+
+      <span class="demo-badge">
+        DEMO / TESTOMGEVING
+      </span>
+
+      <h1>Geld overmaken</h1>
+
+      <p class="subtitle">
+        Dit is uitsluitend een simulatie.
+        Er wordt geen echte overschrijving uitgevoerd.
+      </p>
+
+      <form
+        id="transferForm"
+        novalidate
+      >
+
+        <label for="name">
+          Volledige naam ontvanger *
+        </label>
+
+        <input
+          id="name"
+          type="text"
+          placeholder="Bijvoorbeeld: Jan Jansen"
+          autocomplete="off"
+        >
+
+        <p
+          class="error"
+          id="nameError"
+        >
+          Vul minimaal een voornaam en achternaam in.
+        </p>
+
+        <label>
+          Demo RABO rekeningnummer ontvanger *
+        </label>
+
+        <div
+          class="number-box"
+          id="ibanBox"
+        >
+
+          <span class="fixed-text">
+            NL
+          </span>
+
+          <div class="digit-group">
+            <input class="iban-digit" inputmode="numeric" maxlength="1">
+            <input class="iban-digit" inputmode="numeric" maxlength="1">
+          </div>
+
+          <span class="fixed-text">
+            RABO
+          </span>
+
+          <div class="digit-group">
+            <input class="iban-digit" inputmode="numeric" maxlength="1">
+            <input class="iban-digit" inputmode="numeric" maxlength="1">
+            <input class="iban-digit" inputmode="numeric" maxlength="1">
+            <input class="iban-digit" inputmode="numeric" maxlength="1">
+          </div>
+
+          <div class="digit-group">
+            <input class="iban-digit" inputmode="numeric" maxlength="1">
+            <input class="iban-digit" inputmode="numeric" maxlength="1">
+            <input class="iban-digit" inputmode="numeric" maxlength="1">
+            <input class="iban-digit" inputmode="numeric" maxlength="1">
+          </div>
+
+          <div class="digit-group">
+            <input class="iban-digit" inputmode="numeric" maxlength="1">
+            <input class="iban-digit" inputmode="numeric" maxlength="1">
+          </div>
+
+        </div>
+
+        <p class="field-info">
+          Gebruik uitsluitend fictieve testgegevens.
+        </p>
+
+        <p
+          class="error"
+          id="accountError"
+        >
+          Vul alle 12 cijferhokjes in.
+        </p>
+
+        <label for="amount">
+          Bedrag *
+        </label>
+
+        <div
+          class="amount"
+          id="amountWrapper"
+        >
+
+          <span>€</span>
+
+          <input
+            id="amount"
+            type="number"
+            min="1"
+            max="2500"
+            step="0.01"
+            placeholder="0,00"
+          >
+
+        </div>
+
+        <p class="field-info">
+          Minimaal €1,00 en maximaal €2.500,00.
+        </p>
+
+        <p
+          class="error"
+          id="amountError"
+        ></p>
+
+        <label for="description">
+          Omschrijving
+          <span class="optional">
+            (optioneel)
+          </span>
+        </label>
+
+        <textarea
+          id="description"
+          placeholder="Bijvoorbeeld: Demo betaling"
+        ></textarea>
+
+        <button type="submit">
+          Bekijk overboeking
+        </button>
+
+      </form>
+
+      <div
+        class="result"
+        id="result"
+        aria-live="polite"
+      ></div>
+
+    </section>
+
+    <!-- STAP 3 -->
+
+    <section
+      class="card success-screen"
+      id="successScreen"
+    >
+
+      <div class="success-image">
+        Afbeelding komt hier
+      </div>
+
+      <h2>
+        Demo-overboeking voltooid!
+      </h2>
+
+      <p class="success-message">
+        De gesimuleerde overboeking naar
+        <span id="successName"></span>
+        is voltooid.
+      </p>
+
+      <div class="success-warning">
+        Er is geen echte betaling uitgevoerd
+        en er is geen geld overgemaakt.
+      </div>
+
+      <p class="close-message">
+        Je kunt deze pagina nu afsluiten.
+      </p>
+
+      <button
+        type="button"
+        class="new-transfer"
+        onclick="newTransfer()"
+      >
+        Nieuwe overboeking
+      </button>
+
+    </section>
+
+  </main>
+
+  <footer>
+
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+
+        <img
+          class="footer-logo"
+          src="https://www.tompeople.com/upload/content/logos/RABO_BANK_Logo.png"
+          alt="Rabobank logo"
+        >
+
+        <span>
+          © 2026 Test Site
+        </span>
+
+      </div>
+
+      <div class="footer-links">
+        <a href="#">Voorwaarden</a>
+        <a href="#">Toegankelijkheid</a>
+        <a href="#">Disclaimer</a>
+        <a href="#">Privacy</a>
+        <a href="#">Cookies</a>
+      </div>
+
+    </div>
+
+  </footer>
+
+  <script>
+
+    const loginScreen =
+      document.getElementById("loginScreen");
+
+    const transferScreen =
+      document.getElementById("transferScreen");
+
+    const successScreen =
+      document.getElementById("successScreen");
+
+    const accountTab =
+      document.getElementById("accountTab");
+
+    const pinTab =
+      document.getElementById("pinTab");
+
+    const accountPanel =
+      document.getElementById("accountPanel");
+
+    const pinPanel =
+      document.getElementById("pinPanel");
+
+    function showAccountPanel() {
+      accountPanel.classList.add("active");
+      pinPanel.classList.remove("active");
+
+      accountTab.classList.add("active");
+      pinTab.classList.remove("active");
+    }
+
+    function showPinPanel() {
+      accountPanel.classList.remove("active");
+      pinPanel.classList.add("active");
+
+      accountTab.classList.remove("active");
+      pinTab.classList.add("active");
+    }
+
+    accountTab.addEventListener(
+      "click",
+      showAccountPanel
+    );
+
+    const loginDigits =
+      Array.from(
+        document.querySelectorAll(
+          ".login-digit"
+        )
+      );
+
+    const pinDigits =
+      Array.from(
+        document.querySelectorAll(
+          ".pin-digit"
+        )
+      );
+
+    const loginNumberBox =
+      document.getElementById(
+        "loginNumberBox"
+      );
+
+    const loginNumberError =
+      document.getElementById(
+        "loginNumberError"
+      );
+
+    const pinError =
+      document.getElementById(
+        "pinError"
+      );
+
+    const toPinButton =
+      document.getElementById(
+        "toPinButton"
+      );
+
+    const openDemoButton =
+      document.getElementById(
+        "openDemoButton"
+      );
+
+    const backToNumberButton =
+      document.getElementById(
+        "backToNumberButton"
+      );
+
+    function setupDigitInputs(inputs) {
+
+      inputs.forEach(
+        (input, index) => {
+
+          input.addEventListener(
+            "input",
+            function() {
+
+              input.value =
+                input.value
+                  .replace(
+                    /[^0-9]/g,
+                    ""
+                  )
+                  .slice(0,1);
+
+              if (
+                input.value &&
+                index < inputs.length - 1
+              ) {
+                inputs[index + 1].focus();
+              }
+
+            }
+          );
+
+          input.addEventListener(
+            "keydown",
+            function(event) {
+
+              const allowed = [
+                "Backspace",
+                "Delete",
+                "Tab",
+                "ArrowLeft",
+                "ArrowRight"
+              ];
+
+              if (
+                allowed.includes(event.key)
+              ) {
+
+                if (
+                  event.key === "Backspace" &&
+                  input.value === "" &&
+                  index > 0
+                ) {
+                  inputs[index - 1].focus();
+                }
+
+                return;
+              }
+
+              if (
+                !/^[0-9]$/.test(event.key)
+              ) {
+                event.preventDefault();
+              }
+
+            }
+          );
+
+        }
+      );
+
+    }
+
+    setupDigitInputs(loginDigits);
+    setupDigitInputs(pinDigits);
+
+    function allDigitsComplete(inputs) {
+      return inputs.every(
+        input =>
+          /^[0-9]$/.test(input.value)
+      );
+    }
+
+    toPinButton.addEventListener(
+      "click",
+      function() {
+
+        if (
+          !allDigitsComplete(loginDigits)
+        ) {
+
+          loginNumberError.style.display =
+            "block";
+
+          loginNumberBox.classList.add(
+            "invalid"
+          );
+
+          return;
+        }
+
+        loginNumberError.style.display =
+          "none";
+
+        loginNumberBox.classList.remove(
+          "invalid"
+        );
+
+        showPinPanel();
+
+        pinDigits[0].focus();
+
+      }
+    );
+
+    backToNumberButton.addEventListener(
+      "click",
+      showAccountPanel
+    );
+
+    openDemoButton.addEventListener(
+      "click",
+      function() {
+
+        if (
+          !allDigitsComplete(pinDigits)
+        ) {
+
+          pinError.style.display =
+            "block";
+
+          return;
+        }
+
+        pinError.style.display =
+          "none";
+
+        loginDigits.forEach(
+          input => {
+            input.value = "";
+          }
+        );
+
+        pinDigits.forEach(
+          input => {
+            input.value = "";
+          }
+        );
+
+        loginScreen.style.display =
+          "none";
+
+        transferScreen.style.display =
+          "block";
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+      }
+    );
+
+    /* OVERBOEKING */
+
+    const transferForm =
+      document.getElementById(
+        "transferForm"
+      );
+
+    const nameInput =
+      document.getElementById("name");
+
+    const amountInput =
+      document.getElementById("amount");
+
+    const descriptionInput =
+      document.getElementById(
+        "description"
+      );
+
+    const nameError =
+      document.getElementById(
+        "nameError"
+      );
+
+    const accountError =
+      document.getElementById(
+        "accountError"
+      );
+
+    const amountError =
+      document.getElementById(
+        "amountError"
+      );
+
+    const ibanBox =
+      document.getElementById(
+        "ibanBox"
+      );
+
+    const amountWrapper =
+      document.getElementById(
+        "amountWrapper"
+      );
+
+    const result =
+      document.getElementById(
+        "result"
+      );
+
+    const successName =
+      document.getElementById(
+        "successName"
+      );
+
+    const ibanDigits =
+      Array.from(
+        document.querySelectorAll(
+          ".iban-digit"
+        )
+      );
+
+    setupDigitInputs(
+      ibanDigits
+    );
+
+    function validateName() {
+
+      const parts =
+        nameInput.value
+          .trim()
+          .split(/\s+/)
+          .filter(Boolean);
+
+      if (
+        parts.length < 2
+      ) {
+
+        nameError.style.display =
+          "block";
+
+        nameInput.classList.add(
+          "invalid"
+        );
+
+        return false;
+      }
+
+      nameError.style.display =
+        "none";
+
+      nameInput.classList.remove(
+        "invalid"
+      );
+
+      return true;
+    }
+
+    function validateAccount() {
+
+      if (
+        !allDigitsComplete(
+          ibanDigits
+        )
+      ) {
+
+        accountError.style.display =
+          "block";
+
+        ibanBox.classList.add(
+          "invalid"
+        );
+
+        return false;
+      }
+
+      accountError.style.display =
+        "none";
+
+      ibanBox.classList.remove(
+        "invalid"
+      );
+
+      return true;
+    }
+
+    function getAccountNumber() {
+
+      const digits =
+        ibanDigits
+          .map(
+            input =>
+              input.value
+          )
+          .join("");
+
+      return (
+        "NL" +
+        digits.substring(0,2) +
+        " RABO " +
+        digits.substring(2,6) +
+        " " +
+        digits.substring(6,10) +
+        " " +
+        digits.substring(10,12)
+      );
+
+    }
+
+    function validateAmount() {
+
+      const value =
+        amountInput.value;
+
+      const amount =
+        Number(value);
+
+      if (
+        value === ""
+      ) {
+
+        amountError.textContent =
+          "Vul een bedrag in.";
+
+        amountError.style.display =
+          "block";
+
+        amountWrapper.classList.add(
+          "invalid"
+        );
+
+        return false;
+      }
+
+      if (
+        amount < 1
+      ) {
+
+        amountError.textContent =
+          "Het minimale overboekingsbedrag is €1,00.";
+
+        amountError.style.display =
+          "block";
+
+        amountWrapper.classList.add(
+          "invalid"
+        );
+
+        return false;
+      }
+
+      if (
+        amount > 2500
+      ) {
+
+        amountError.textContent =
+          "Het maximale overboekingsbedrag is €2.500,00.";
+
+        amountError.style.display =
+          "block";
+
+        amountWrapper.classList.add(
+          "invalid"
+        );
+
+        return false;
+      }
+
+      amountError.style.display =
+        "none";
+
+      amountWrapper.classList.remove(
+        "invalid"
+      );
+
+      return true;
+    }
+
+    transferForm.addEventListener(
+      "submit",
+      function(event) {
+
+        event.preventDefault();
+
+        const nameValid =
+          validateName();
+
+        const accountValid =
+          validateAccount();
+
+        const amountValid =
+          validateAmount();
+
+        if (
+          !nameValid ||
+          !accountValid ||
+          !amountValid
+        ) {
+
+          result.style.display =
+            "none";
+
+          return;
+        }
+
+        const name =
+          nameInput.value.trim();
+
+        const account =
+          getAccountNumber();
+
+        const amount =
+          Number(
+            amountInput.value
+          ).toFixed(2);
+
+        const description =
+          descriptionInput.value
+            .trim();
+
+        result.innerHTML = `
+          <strong>
+            Controleer je demo-overboeking
+          </strong>
+
+          <br><br>
+
+          Ontvanger:
+          ${escapeHtml(name)}
+          <br>
+
+          Rekening:
+          ${escapeHtml(account)}
+          <br>
+
+          Bedrag:
+          € ${escapeHtml(amount)}
+          <br>
+
+          Omschrijving:
+          ${escapeHtml(
+            description ||
+            "Geen omschrijving"
+          )}
+
+          <div class="result-actions">
+
+            <button
+              type="button"
+              class="secondary-button"
+              onclick="editTransfer()"
+            >
+              Terug
+            </button>
+
+            <button
+              type="button"
+              onclick="confirmTransfer()"
+            >
+              Bevestig demo
+            </button>
+
+          </div>
+        `;
+
+        result.style.display =
+          "block";
+
+        result.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+
+      }
+    );
+
+    function editTransfer() {
+      result.style.display =
+        "none";
+    }
+
+    function confirmTransfer() {
+
+      successName.textContent =
+        nameInput.value.trim();
+
+      transferScreen.style.display =
+        "none";
+
+      successScreen.style.display =
+        "block";
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+    function newTransfer() {
+
+      transferForm.reset();
+
+      ibanDigits.forEach(
+        input => {
+          input.value = "";
+        }
+      );
+
+      nameError.style.display =
+        "none";
+
+      accountError.style.display =
+        "none";
+
+      amountError.style.display =
+        "none";
+
+      result.style.display =
+        "none";
+
+      successScreen.style.display =
+        "none";
+
+      transferScreen.style.display =
+        "block";
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+    function escapeHtml(value) {
+
+      const div =
+        document.createElement("div");
+
+      div.textContent =
+        String(value);
+
+      return div.innerHTML;
+
+    }
+
+  </script>
+
+</body>
+</html>
