@@ -34,7 +34,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
     }
 
     .logo img {
@@ -70,7 +70,7 @@
       padding: 38px;
       background: #fff;
       border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, .09);
+      box-shadow: 0 8px 30px rgba(0,0,0,.09);
     }
 
     h1,
@@ -163,6 +163,8 @@
       color: #222;
     }
 
+    /* LOGIN */
+
     .login-tabs {
       display: flex;
       margin-bottom: 28px;
@@ -191,6 +193,8 @@
     .login-panel.active {
       display: block;
     }
+
+    /* CIJFERHOKJES */
 
     .number-box {
       display: flex;
@@ -242,6 +246,8 @@
       height: 50px;
     }
 
+    /* BEDRAG */
+
     .amount {
       display: flex;
       align-items: center;
@@ -264,6 +270,8 @@
       border: 0;
       outline: none;
     }
+
+    /* CONTROLE */
 
     .result {
       display: none;
@@ -289,10 +297,14 @@
       margin-top: 0;
     }
 
+    /* SCHERMEN */
+
     #transferScreen,
     #successScreen {
       display: none;
     }
+
+    /* SUCCES */
 
     .success-screen {
       text-align: center;
@@ -302,20 +314,27 @@
 
     .success-image {
       width: 100%;
-      max-width: 420px;
+      max-width: 500px;
       margin: 0 auto 35px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      text-align: center;
     }
 
     .success-image img {
       display: block;
       width: 100%;
-      max-width: 420px;
+      max-width: 500px;
       height: auto;
-      max-height: 320px;
+      margin: 0 auto;
       object-fit: contain;
+    }
+
+    .image-error {
+      display: none;
+      padding: 20px;
+      background: #fff3cd;
+      color: #664d03;
+      border-radius: 8px;
+      line-height: 1.5;
     }
 
     .success-screen h2 {
@@ -354,6 +373,8 @@
       max-width: 300px;
       margin: 30px auto 0;
     }
+
+    /* FOOTER */
 
     footer {
       margin-top: 70px;
@@ -473,8 +494,8 @@
       <h1>Demo openen</h1>
 
       <p class="subtitle">
-        Vul een fictief test-rekeningnummer in
-        en kies daarna een demo-code van vier cijfers.
+        Vul een fictief test-rekeningnummer in en kies daarna
+        een demo-code van vier cijfers.
       </p>
 
       <div class="login-tabs">
@@ -497,19 +518,11 @@
 
       </div>
 
-      <div
-        class="login-panel active"
-        id="accountPanel"
-      >
+      <div class="login-panel active" id="accountPanel">
 
-        <label>
-          Demo-rekeningnummer *
-        </label>
+        <label>Demo-rekeningnummer *</label>
 
-        <div
-          class="number-box"
-          id="loginNumberBox"
-        >
+        <div class="number-box" id="loginNumberBox">
 
           <span class="fixed-text">NL</span>
 
@@ -550,54 +563,21 @@
           Vul alle 12 cijferhokjes in.
         </p>
 
-        <button
-          type="button"
-          id="toPinButton"
-        >
+        <button type="button" id="toPinButton">
           Volgende
         </button>
 
       </div>
 
-      <div
-        class="login-panel"
-        id="pinPanel"
-      >
+      <div class="login-panel" id="pinPanel">
 
-        <label>
-          Zelfgekozen demo-code *
-        </label>
+        <label>Zelfgekozen demo-code *</label>
 
         <div class="pin-box">
-
-          <input
-            class="pin-digit"
-            type="password"
-            inputmode="numeric"
-            maxlength="1"
-          >
-
-          <input
-            class="pin-digit"
-            type="password"
-            inputmode="numeric"
-            maxlength="1"
-          >
-
-          <input
-            class="pin-digit"
-            type="password"
-            inputmode="numeric"
-            maxlength="1"
-          >
-
-          <input
-            class="pin-digit"
-            type="password"
-            inputmode="numeric"
-            maxlength="1"
-          >
-
+          <input class="pin-digit" type="password" inputmode="numeric" maxlength="1">
+          <input class="pin-digit" type="password" inputmode="numeric" maxlength="1">
+          <input class="pin-digit" type="password" inputmode="numeric" maxlength="1">
+          <input class="pin-digit" type="password" inputmode="numeric" maxlength="1">
         </div>
 
         <p class="field-info">
@@ -609,10 +589,7 @@
           Vul alle vier cijfers in.
         </p>
 
-        <button
-          type="button"
-          id="openDemoButton"
-        >
+        <button type="button" id="openDemoButton">
           Verder naar overboeken
         </button>
 
@@ -630,10 +607,7 @@
 
     <!-- STAP 2 -->
 
-    <section
-      class="card"
-      id="transferScreen"
-    >
+    <section class="card" id="transferScreen">
 
       <h1>Geld overmaken</h1>
 
@@ -642,10 +616,7 @@
         Er wordt geen echte overschrijving uitgevoerd.
       </p>
 
-      <form
-        id="transferForm"
-        novalidate
-      >
+      <form id="transferForm" novalidate>
 
         <label for="name">
           Volledige naam ontvanger *
@@ -666,10 +637,7 @@
           Demo RABO rekeningnummer ontvanger *
         </label>
 
-        <div
-          class="number-box"
-          id="ibanBox"
-        >
+        <div class="number-box" id="ibanBox">
 
           <span class="fixed-text">NL</span>
 
@@ -709,15 +677,9 @@
           Vul alle 12 cijferhokjes in.
         </p>
 
-        <label for="amount">
-          Bedrag *
-        </label>
+        <label for="amount">Bedrag *</label>
 
-        <div
-          class="amount"
-          id="amountWrapper"
-        >
-
+        <div class="amount" id="amountWrapper">
           <span>€</span>
 
           <input
@@ -728,23 +690,17 @@
             step="0.01"
             placeholder="0,00"
           >
-
         </div>
 
         <p class="field-info">
           Minimaal €1,00 en maximaal €2.500,00.
         </p>
 
-        <p
-          class="error"
-          id="amountError"
-        ></p>
+        <p class="error" id="amountError"></p>
 
         <label for="description">
           Omschrijving
-          <span class="optional">
-            (optioneel)
-          </span>
+          <span class="optional">(optioneel)</span>
         </label>
 
         <textarea
@@ -773,13 +729,28 @@
       id="successScreen"
     >
 
+      <!--
+        Afbeelding komt rechtstreeks van jouw GitHub Pages-site.
+      -->
+
       <div class="success-image">
 
         <img
           id="successImage"
-          src="./raboverzendlogo.png"
+          src="https://daantech1.github.io/rabo-site/raboverzendlogo.png"
           alt="Demo verzendlogo"
+          onerror="
+            this.style.display='none';
+            document.getElementById('imageError').style.display='block';
+          "
         >
+
+        <div
+          class="image-error"
+          id="imageError"
+        >
+          De demo-afbeelding kon niet worden geladen.
+        </div>
 
       </div>
 
@@ -869,42 +840,20 @@
 
 
     function showAccountPanel() {
+      accountPanel.classList.add("active");
+      pinPanel.classList.remove("active");
 
-      accountPanel.classList.add(
-        "active"
-      );
-
-      pinPanel.classList.remove(
-        "active"
-      );
-
-      accountTab.classList.add(
-        "active"
-      );
-
-      pinTab.classList.remove(
-        "active"
-      );
+      accountTab.classList.add("active");
+      pinTab.classList.remove("active");
     }
 
 
     function showPinPanel() {
+      accountPanel.classList.remove("active");
+      pinPanel.classList.add("active");
 
-      accountPanel.classList.remove(
-        "active"
-      );
-
-      pinPanel.classList.add(
-        "active"
-      );
-
-      accountTab.classList.remove(
-        "active"
-      );
-
-      pinTab.classList.add(
-        "active"
-      );
+      accountTab.classList.remove("active");
+      pinTab.classList.add("active");
     }
 
 
@@ -916,155 +865,99 @@
 
     const loginDigits =
       Array.from(
-        document.querySelectorAll(
-          ".login-digit"
-        )
+        document.querySelectorAll(".login-digit")
       );
 
     const pinDigits =
       Array.from(
-        document.querySelectorAll(
-          ".pin-digit"
-        )
+        document.querySelectorAll(".pin-digit")
       );
 
     const loginNumberBox =
-      document.getElementById(
-        "loginNumberBox"
-      );
+      document.getElementById("loginNumberBox");
 
     const loginNumberError =
-      document.getElementById(
-        "loginNumberError"
-      );
+      document.getElementById("loginNumberError");
 
     const pinError =
-      document.getElementById(
-        "pinError"
-      );
+      document.getElementById("pinError");
 
     const toPinButton =
-      document.getElementById(
-        "toPinButton"
-      );
+      document.getElementById("toPinButton");
 
     const openDemoButton =
-      document.getElementById(
-        "openDemoButton"
-      );
+      document.getElementById("openDemoButton");
 
     const backToNumberButton =
-      document.getElementById(
-        "backToNumberButton"
-      );
+      document.getElementById("backToNumberButton");
 
 
     function setupDigitInputs(inputs) {
 
-      inputs.forEach(
-        (input, index) => {
+      inputs.forEach((input, index) => {
 
-          input.addEventListener(
-            "input",
-            function() {
+        input.addEventListener(
+          "input",
+          function() {
 
-              input.value =
-                input.value
-                  .replace(
-                    /[^0-9]/g,
-                    ""
-                  )
-                  .slice(0, 1);
+            input.value =
+              input.value
+                .replace(/[^0-9]/g, "")
+                .slice(0, 1);
 
-
-              if (
-                input.value &&
-                index <
-                  inputs.length - 1
-              ) {
-
-                inputs[
-                  index + 1
-                ].focus();
-
-              }
-
+            if (
+              input.value &&
+              index < inputs.length - 1
+            ) {
+              inputs[index + 1].focus();
             }
-          );
+          }
+        );
 
 
-          input.addEventListener(
-            "keydown",
-            function(event) {
+        input.addEventListener(
+          "keydown",
+          function(event) {
 
-              const allowed = [
-                "Backspace",
-                "Delete",
-                "Tab",
-                "ArrowLeft",
-                "ArrowRight"
-              ];
+            const allowed = [
+              "Backspace",
+              "Delete",
+              "Tab",
+              "ArrowLeft",
+              "ArrowRight"
+            ];
 
-
-              if (
-                allowed.includes(
-                  event.key
-                )
-              ) {
-
-                if (
-                  event.key ===
-                    "Backspace" &&
-                  input.value === "" &&
-                  index > 0
-                ) {
-
-                  inputs[
-                    index - 1
-                  ].focus();
-
-                }
-
-                return;
-              }
-
+            if (allowed.includes(event.key)) {
 
               if (
-                !/^[0-9]$/.test(
-                  event.key
-                )
+                event.key === "Backspace" &&
+                input.value === "" &&
+                index > 0
               ) {
-
-                event.preventDefault();
-
+                inputs[index - 1].focus();
               }
 
+              return;
             }
-          );
 
-        }
-      );
+            if (!/^[0-9]$/.test(event.key)) {
+              event.preventDefault();
+            }
+          }
+        );
+
+      });
     }
 
 
-    setupDigitInputs(
-      loginDigits
-    );
-
-    setupDigitInputs(
-      pinDigits
-    );
+    setupDigitInputs(loginDigits);
+    setupDigitInputs(pinDigits);
 
 
     function allDigitsComplete(inputs) {
-
       return inputs.every(
-        input =>
-          /^[0-9]$/.test(
-            input.value
-          )
+        input => /^[0-9]$/.test(input.value)
       );
-
     }
 
 
@@ -1072,11 +965,7 @@
       "click",
       function() {
 
-        if (
-          !allDigitsComplete(
-            loginDigits
-          )
-        ) {
+        if (!allDigitsComplete(loginDigits)) {
 
           loginNumberError.style.display =
             "block";
@@ -1088,7 +977,6 @@
           return;
         }
 
-
         loginNumberError.style.display =
           "none";
 
@@ -1096,18 +984,11 @@
           "invalid"
         );
 
-
         showPinPanel();
 
-
-        if (
-          pinDigits.length > 0
-        ) {
-
+        if (pinDigits.length > 0) {
           pinDigits[0].focus();
-
         }
-
       }
     );
 
@@ -1122,11 +1003,7 @@
       "click",
       function() {
 
-        if (
-          !allDigitsComplete(
-            pinDigits
-          )
-        ) {
+        if (!allDigitsComplete(pinDigits)) {
 
           pinError.style.display =
             "block";
@@ -1134,24 +1011,21 @@
           return;
         }
 
-
         pinError.style.display =
           "none";
 
+        /*
+          De fictieve invoer wordt verwijderd.
+          Niets wordt opgeslagen of verzonden.
+        */
 
-        loginDigits.forEach(
-          input => {
-            input.value = "";
-          }
-        );
+        loginDigits.forEach(input => {
+          input.value = "";
+        });
 
-
-        pinDigits.forEach(
-          input => {
-            input.value = "";
-          }
-        );
-
+        pinDigits.forEach(input => {
+          input.value = "";
+        });
 
         loginScreen.style.display =
           "none";
@@ -1159,82 +1033,54 @@
         transferScreen.style.display =
           "block";
 
-
         window.scrollTo({
           top: 0,
           behavior: "smooth"
         });
-
       }
     );
 
 
     const transferForm =
-      document.getElementById(
-        "transferForm"
-      );
+      document.getElementById("transferForm");
 
     const nameInput =
-      document.getElementById(
-        "name"
-      );
+      document.getElementById("name");
 
     const amountInput =
-      document.getElementById(
-        "amount"
-      );
+      document.getElementById("amount");
 
     const descriptionInput =
-      document.getElementById(
-        "description"
-      );
+      document.getElementById("description");
 
     const nameError =
-      document.getElementById(
-        "nameError"
-      );
+      document.getElementById("nameError");
 
     const accountError =
-      document.getElementById(
-        "accountError"
-      );
+      document.getElementById("accountError");
 
     const amountError =
-      document.getElementById(
-        "amountError"
-      );
+      document.getElementById("amountError");
 
     const ibanBox =
-      document.getElementById(
-        "ibanBox"
-      );
+      document.getElementById("ibanBox");
 
     const amountWrapper =
-      document.getElementById(
-        "amountWrapper"
-      );
+      document.getElementById("amountWrapper");
 
     const result =
-      document.getElementById(
-        "result"
-      );
+      document.getElementById("result");
 
     const successName =
-      document.getElementById(
-        "successName"
-      );
+      document.getElementById("successName");
 
     const ibanDigits =
       Array.from(
-        document.querySelectorAll(
-          ".iban-digit"
-        )
+        document.querySelectorAll(".iban-digit")
       );
 
 
-    setupDigitInputs(
-      ibanDigits
-    );
+    setupDigitInputs(ibanDigits);
 
 
     function validateName() {
@@ -1245,10 +1091,7 @@
           .split(/\s+/)
           .filter(Boolean);
 
-
-      if (
-        parts.length < 2
-      ) {
+      if (parts.length < 2) {
 
         nameError.style.display =
           "block";
@@ -1259,7 +1102,6 @@
 
         return false;
       }
-
 
       nameError.style.display =
         "none";
@@ -1274,11 +1116,7 @@
 
     function validateAccount() {
 
-      if (
-        !allDigitsComplete(
-          ibanDigits
-        )
-      ) {
+      if (!allDigitsComplete(ibanDigits)) {
 
         accountError.style.display =
           "block";
@@ -1289,7 +1127,6 @@
 
         return false;
       }
-
 
       accountError.style.display =
         "none";
@@ -1306,12 +1143,8 @@
 
       const digits =
         ibanDigits
-          .map(
-            input =>
-              input.value
-          )
+          .map(input => input.value)
           .join("");
-
 
       return (
         "NL" +
@@ -1334,10 +1167,7 @@
       const amount =
         Number(value);
 
-
-      if (
-        value === ""
-      ) {
+      if (value === "") {
 
         amountError.textContent =
           "Vul een bedrag in.";
@@ -1352,10 +1182,7 @@
         return false;
       }
 
-
-      if (
-        amount < 1
-      ) {
+      if (amount < 1) {
 
         amountError.textContent =
           "Het minimale overboekingsbedrag is €1,00.";
@@ -1370,10 +1197,7 @@
         return false;
       }
 
-
-      if (
-        amount > 2500
-      ) {
+      if (amount > 2500) {
 
         amountError.textContent =
           "Het maximale overboekingsbedrag is €2.500,00.";
@@ -1387,7 +1211,6 @@
 
         return false;
       }
-
 
       amountError.style.display =
         "none";
@@ -1406,7 +1229,6 @@
 
         event.preventDefault();
 
-
         const nameValid =
           validateName();
 
@@ -1415,7 +1237,6 @@
 
         const amountValid =
           validateAmount();
-
 
         if (
           !nameValid ||
@@ -1429,7 +1250,6 @@
           return;
         }
 
-
         const name =
           nameInput.value.trim();
 
@@ -1437,13 +1257,11 @@
           getAccountNumber();
 
         const amount =
-          Number(
-            amountInput.value
-          ).toFixed(2);
+          Number(amountInput.value)
+            .toFixed(2);
 
         const description =
-          descriptionInput.value
-            .trim();
+          descriptionInput.value.trim();
 
 
         result.innerHTML = `
@@ -1491,25 +1309,20 @@
           </div>
         `;
 
-
         result.style.display =
           "block";
-
 
         result.scrollIntoView({
           behavior: "smooth",
           block: "center"
         });
-
       }
     );
 
 
     function editTransfer() {
-
       result.style.display =
         "none";
-
     }
 
 
@@ -1518,19 +1331,16 @@
       successName.textContent =
         nameInput.value.trim();
 
-
       transferScreen.style.display =
         "none";
 
       successScreen.style.display =
         "block";
 
-
       window.scrollTo({
         top: 0,
         behavior: "smooth"
       });
-
     }
 
 
@@ -1538,13 +1348,9 @@
 
       transferForm.reset();
 
-
-      ibanDigits.forEach(
-        input => {
-          input.value = "";
-        }
-      );
-
+      ibanDigits.forEach(input => {
+        input.value = "";
+      });
 
       nameError.style.display =
         "none";
@@ -1554,7 +1360,6 @@
 
       amountError.style.display =
         "none";
-
 
       nameInput.classList.remove(
         "invalid"
@@ -1568,7 +1373,6 @@
         "invalid"
       );
 
-
       result.style.display =
         "none";
 
@@ -1578,27 +1382,22 @@
       transferScreen.style.display =
         "block";
 
-
       window.scrollTo({
         top: 0,
         behavior: "smooth"
       });
-
     }
 
 
     function escapeHtml(value) {
 
       const div =
-        document.createElement(
-          "div"
-        );
+        document.createElement("div");
 
       div.textContent =
         String(value);
 
       return div.innerHTML;
-
     }
 
   </script>
